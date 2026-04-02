@@ -11,7 +11,7 @@ dotenv.config();
 connectDB();
 
 // Route files
-const auth = require("./routes/auth");
+const auth = require("./Routers/auth");
 
 const app = express();
 
