@@ -12,6 +12,7 @@ connectDB();
 
 // Route files
 const auth = require("./Routers/auth");
+const admin = require("./routes/admin");
 
 const app = express();
 
