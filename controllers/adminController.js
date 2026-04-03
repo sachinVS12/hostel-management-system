@@ -1,8 +1,8 @@
 const User = require("../models/User");
 const Room = require("../models/Room");
-const Booking = require("../models/Booking");
-const Complaint = require("../models/Complaint");
-const Payment = require("../models/Payment");
+//const Booking = require("../models/Booking");
+//const Complaint = require("../models/Complaint");
+//const Payment = require("../models/Payment");
 
 // @desc    Get all students
 // @route   GET /api/admin/students
