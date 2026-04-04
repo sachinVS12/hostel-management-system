@@ -14,7 +14,7 @@ connectDB();
 const auth = require("./Routers/auth");
 const admin = require("./Routers/admin");
 const student = require("./Routers/student");
-const complaints = require("./routes/complaint");
+const complaints = require("./Routers/complaint");
 
 const app = express();
 
