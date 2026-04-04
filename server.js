@@ -14,6 +14,7 @@ connectDB();
 const auth = require("./Routers/auth");
 const admin = require("./Routers/admin");
 const student = require("./Routers/student");
+const complaints = require("./routes/complaint");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Mount routers
 app.use("/api/auth", auth);
+app.use("/api/complaints", complaints);
 
 // Error handler
 app.use((err, req, res, next) => {
