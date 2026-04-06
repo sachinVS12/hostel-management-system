@@ -6,12 +6,10 @@ const paymentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Student reference is required"],
-      index: true,
     },
     booking: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",
-      index: true,
     },
     amount: {
       type: Number,
@@ -32,7 +30,6 @@ const paymentSchema = new mongoose.Schema(
         message: "Invalid payment type",
       },
       required: [true, "Payment type is required"],
-      index: true,
     },
     paymentMethod: {
       type: String,
@@ -41,20 +38,19 @@ const paymentSchema = new mongoose.Schema(
         message: "Invalid payment method",
       },
       required: [true, "Payment method is required"],
-      index: true,
     },
     transactionId: {
       type: String,
       unique: true,
       sparse: true,
       trim: true,
-      index: true,
+      // Removed index: true - will be defined in schema.index() below
     },
     receiptNumber: {
       type: String,
       unique: true,
       required: [true, "Receipt number is required"],
-      index: true,
+      // Removed index: true - will be defined in schema.index() below
     },
     status: {
       type: String,
@@ -63,16 +59,13 @@ const paymentSchema = new mongoose.Schema(
         message: "Invalid payment status",
       },
       default: "pending",
-      index: true,
     },
     paymentDate: {
       type: Date,
       default: Date.now,
-      index: true,
     },
     dueDate: {
       type: Date,
-      index: true,
     },
     paidDate: {
       type: Date,
@@ -96,11 +89,9 @@ const paymentSchema = new mongoose.Schema(
     },
     gatewayPaymentId: {
       type: String,
-      index: true,
     },
     gatewayOrderId: {
       type: String,
-      index: true,
     },
     gatewaySignature: {
       type: String,
@@ -179,14 +170,18 @@ const paymentSchema = new mongoose.Schema(
   },
 );
 
-// Indexes for better query performance
+// Define all indexes here to avoid duplication
 paymentSchema.index({ student: 1, paymentDate: -1 });
 paymentSchema.index({ status: 1, paymentDate: -1 });
 paymentSchema.index({ paymentType: 1, status: 1 });
-paymentSchema.index({ receiptNumber: 1 });
-paymentSchema.index({ transactionId: 1 });
+paymentSchema.index({ receiptNumber: 1 }); // Single definition
+paymentSchema.index({ transactionId: 1 }); // Single definition
 paymentSchema.index({ "paymentFor.month": 1, "paymentFor.year": 1 });
 paymentSchema.index({ createdAt: -1 });
+paymentSchema.index({ booking: 1 });
+paymentSchema.index({ dueDate: 1 });
+paymentSchema.index({ gatewayPaymentId: 1 });
+paymentSchema.index({ gatewayOrderId: 1 });
 
 // Virtual for formatted amount
 paymentSchema.virtual("formattedAmount").get(function () {
@@ -308,7 +303,7 @@ paymentSchema.statics.getStudentPaymentSummary = async function (studentId) {
   const summary = await this.aggregate([
     {
       $match: {
-        student: mongoose.Types.ObjectId(studentId),
+        student: new mongoose.Types.ObjectId(studentId),
         status: "success",
       },
     },
@@ -325,7 +320,7 @@ paymentSchema.statics.getStudentPaymentSummary = async function (studentId) {
   const totalPaid = await this.aggregate([
     {
       $match: {
-        student: mongoose.Types.ObjectId(studentId),
+        student: new mongoose.Types.ObjectId(studentId),
         status: "success",
       },
     },
