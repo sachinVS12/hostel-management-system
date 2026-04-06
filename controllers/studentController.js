@@ -1,7 +1,7 @@
 const Booking = require("../models/Booking");
 const Complaint = require("../models/Complaint");
 const Payment = require("../models/Payment");
-//const Room = require("../models/Room");
+const Room = require("../models/Room");
 
 // @desc    Get student dashboard data
 // @route   GET /api/student/dashboard

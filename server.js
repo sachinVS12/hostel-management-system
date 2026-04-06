@@ -16,7 +16,7 @@ const admin = require("./Routers/admin");
 const student = require("./Routers/student");
 const complaints = require("./Routers/complaint");
 const room = require("./Routers/room");
-const payments = require("./routes/payment");
+const payments = require("./Routers/payment");
 
 const app = express();
 
