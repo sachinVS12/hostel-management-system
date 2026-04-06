@@ -44,13 +44,13 @@ const paymentSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
       trim: true,
-      // Removed index: true - will be defined in schema.index() below
+      // NO index: true here
     },
     receiptNumber: {
       type: String,
       unique: true,
       required: [true, "Receipt number is required"],
-      // Removed index: true - will be defined in schema.index() below
+      // NO index: true here
     },
     status: {
       type: String,
@@ -170,12 +170,16 @@ const paymentSchema = new mongoose.Schema(
   },
 );
 
-// Define all indexes here to avoid duplication
+// Define ALL indexes here - this is the ONLY place indexes should be defined
+paymentSchema.index({ student: 1 });
 paymentSchema.index({ student: 1, paymentDate: -1 });
+paymentSchema.index({ status: 1 });
 paymentSchema.index({ status: 1, paymentDate: -1 });
+paymentSchema.index({ paymentType: 1 });
 paymentSchema.index({ paymentType: 1, status: 1 });
-paymentSchema.index({ receiptNumber: 1 }); // Single definition
-paymentSchema.index({ transactionId: 1 }); // Single definition
+paymentSchema.index({ receiptNumber: 1 }, { unique: true });
+paymentSchema.index({ transactionId: 1 }, { unique: true, sparse: true });
+paymentSchema.index({ paymentDate: -1 });
 paymentSchema.index({ "paymentFor.month": 1, "paymentFor.year": 1 });
 paymentSchema.index({ createdAt: -1 });
 paymentSchema.index({ booking: 1 });
