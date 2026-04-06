@@ -15,6 +15,7 @@ const auth = require("./Routers/auth");
 const admin = require("./Routers/admin");
 const student = require("./Routers/student");
 const complaints = require("./Routers/complaint");
+const room = require("./Routers/room");
 
 const app = express();
 
@@ -30,6 +31,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Mount routers
 app.use("/api/auth", auth);
+app.use("/api/admin", admin);
+app.use("/api/student", student);
+app.use("/api/room", room);
 app.use("/api/complaints", complaints);
 
 // Error handler
