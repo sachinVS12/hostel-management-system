@@ -16,6 +16,7 @@ const admin = require("./Routers/admin");
 const student = require("./Routers/student");
 const complaints = require("./Routers/complaint");
 const room = require("./Routers/room");
+const payments = require("./routes/payment");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/admin", admin);
 app.use("/api/student", student);
 app.use("/api/room", room);
 app.use("/api/complaints", complaints);
+app.use("/api/payments", payments);
 
 // Error handler
 app.use((err, req, res, next) => {
